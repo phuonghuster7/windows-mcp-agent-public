@@ -1,0 +1,58 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Virtual environments
+.venv/
+.venv-*/
+venv/
+env/
+
+# Secrets, DPAPI blobs, and local environment files (NEVER COMMIT)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.p12
+*.kdbx
+*.dpapi
+runtime/secrets/
+config/tunnel-autonomous.yaml
+!config/tunnel-autonomous.example.yaml
+
+# Mutable runtime logs, locks, jobs, and temporary artifacts
+runtime/logs/
+runtime/coding_backups/
+runtime/coding_audit.db*
+backups/
+benchmarks/
+runtime/*.log
+runtime/*.err
+runtime/*.out
+runtime/*.url
+runtime/*.json
+runtime/*.jsonl
+runtime/*.db
+runtime/*.db-shm
+runtime/*.db-wal
+runtime/autonomous_worker.pid
+runtime/watchdog.lock
+runtime/EMERGENCY_STOP
+runtime/jobs/
+runtime/evidence/*
+!runtime/evidence/.gitkeep
+dist/*
+!dist/.gitkeep
+
+# OS / IDE metadata
+.DS_Store
+Thumbs.db
+*.swp
+*.bak*
+

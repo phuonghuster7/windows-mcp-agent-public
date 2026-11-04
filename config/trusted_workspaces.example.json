@@ -1,0 +1,60 @@
+{
+  "version": "1.0.0",
+  "trusted_mode_enabled": true,
+  "trusted_workspaces": [
+    {
+      "workspace_root": "benchmarks/codex_like_eval",
+      "include_subdirectories": true,
+      "allowed_tools": [
+        "read_file",
+        "read_file_range",
+        "write_file",
+        "edit_file",
+        "append_file",
+        "create_directory",
+        "list_directory",
+        "search_code",
+        "find_files",
+        "powershell_execute",
+        "git_status",
+        "git_diff",
+        "git_log"
+      ],
+      "allowed_commands": [
+        "pytest*",
+        "python*",
+        "git*"
+      ],
+      "max_tool_calls": 500,
+      "max_retries": 10,
+      "duration_seconds": 3600
+    },
+    {
+      "workspace_root": ".",
+      "include_subdirectories": true,
+      "allowed_tools": [
+        "read_file",
+        "read_file_range",
+        "write_file",
+        "edit_file",
+        "append_file",
+        "create_directory",
+        "list_directory",
+        "search_code",
+        "find_files",
+        "powershell_execute",
+        "git_status",
+        "git_diff",
+        "git_log"
+      ],
+      "allowed_commands": [
+        "pytest*",
+        "python*",
+        "git*"
+      ],
+      "max_tool_calls": 500,
+      "max_retries": 10,
+      "duration_seconds": 3600
+    }
+  ]
+}

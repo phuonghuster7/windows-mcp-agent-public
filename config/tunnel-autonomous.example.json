@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "config_version": 1,
+  "profile_name": "windows-mcp-autonomous",
+  "profile_yaml_path": "config/tunnel-autonomous.yaml",
+  "target_mcp_url": "http://127.0.0.1:8768/mcp",
+  "target_health_url": "http://127.0.0.1:8768/health",
+  "exposed_tools_count": 6,
+  "exposed_tools": [
+    "agent_submit_task",
+    "agent_task_status",
+    "agent_task_logs",
+    "agent_task_diff",
+    "agent_task_artifacts",
+    "agent_list_tasks"
+  ],
+  "tunnel_status": "AWAITING_OWNER_REMOTE_PROVISIONING",
+  "required_owner_action": "PROVISION_REMOTE_TUNNEL_ON_OPENAI_PLATFORM",
+  "tunnel_id_required": "<OWNER_PROVISIONED_TUNNEL_ID_REQUIRED>",
+  "verification_matrix_8_states": {
+    "CONFIG_VALIDATED": {
+      "status": "PASS",
+      "detail": "Validated via tunnel-client.exe doctor --profile-file config/tunnel-autonomous.yaml"
+    },
+    "LOCAL_TARGET_HEALTHY": {
+      "status": "PASS",
+      "detail": "http://127.0.0.1:8768/health and /mcp live & listening on dedicated loopback adapter"
+    },
+    "REMOTE_TUNNEL_PROVISIONED": {
+      "status": "OWNER_ACTION_REQUIRED",
+      "detail": "Never invent remote tunnel ID. Owner must create tunnel named windows-mcp-autonomous on https://platform.openai.com/settings/organization/tunnels (requires Tunnels Read + Manage + Use permissions)"
+    },
+    "TUNNEL_RUNNING": {
+      "status": "BLOCKED",
+      "detail": "Awaiting Owner Remote Tunnel ID & Runtime API Key"
+    },
+    "CONTROL_PLANE_POLLING": {
+      "status": "BLOCKED",
+      "detail": "Awaiting Owner Remote Tunnel ID & Runtime API Key"
+    },
+    "CHATGPT_WORKSPACE_ASSOCIATED": {
+      "status": "OWNER_ACTION_REQUIRED",
+      "detail": "Requires owner to associate ChatGPT Workspace with the OpenAI Organization"
+    },
+    "CHATGPT_PLUGIN_CONNECTED": {
+      "status": "OWNER_ACTION_REQUIRED",
+      "detail": "Owner must add custom MCP connector plugin in https://chatgpt.com/#settings/Connectors"
+    },
+    "CLOUD_TOOL_CALL_VERIFIED": {
+      "status": "BLOCKED",
+      "detail": "Awaiting Plugin Connection in ChatGPT Web"
+    }
+  },
+  "control_plane": {
+    "base_url": "https://api.openai.com",
+    "tunnel_id": "<OWNER_PROVISIONED_TUNNEL_ID_REQUIRED>",
+    "tunnel_id_syntactic_fallback": "tunnel_0123456789abcdef0123456789abcdef",
+    "api_key": "env:CONTROL_PLANE_API_KEY"
+  },
+  "health": {
+    "listen_addr": "127.0.0.1:0",
+    "url_file": "runtime/logs/windows-mcp-autonomous-health.url"
+  },
+  "admin_ui": {
+    "open_browser": false
+  },
+  "log": {
+    "level": "info",
+    "format": "json"
+  },
+  "mcp": {
+    "extra_headers": {
+      "Authorization": "Bearer env:WINDOWS_MCP_AUTONOMOUS_TOKEN"
+    },
+    "server_urls": [
+      {
+        "channel": "main",
+        "url": "http://127.0.0.1:8768/mcp"
+      }
+    ]
+  }
+}

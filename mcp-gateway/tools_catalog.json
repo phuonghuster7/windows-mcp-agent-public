@@ -1,0 +1,1630 @@
+{
+  "source": "supplied inventory; not verified against live OpenAPI",
+  "tools": [
+    {
+      "name": "close_shell_session",
+      "method": "POST",
+      "path": "/api/tools/close_shell_session",
+      "description": "Đóng 1 phiên shell đang mở, giải phóng process.",
+      "group": "destructive",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "session_id"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "delete_directory",
+      "method": "POST",
+      "path": "/api/tools/delete_directory",
+      "description": "WRITE OPERATION. DANGEROUS. Delete a directory.",
+      "group": "destructive",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "recursive": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "delete_file",
+      "method": "POST",
+      "path": "/api/tools/delete_file",
+      "description": "WRITE OPERATION. DANGEROUS. Delete a file.",
+      "group": "destructive",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "exec_in_session",
+      "method": "POST",
+      "path": "/api/tools/exec_in_session",
+      "description": "Chạy 1 lệnh trong phiên shell đã mở, giữ nguyên st...",
+      "group": "execute",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "type": "string"
+          },
+          "command": {
+            "type": "string"
+          },
+          "timeout_s": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "command",
+          "session_id"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "kill_process",
+      "method": "POST",
+      "path": "/api/tools/kill_process",
+      "description": "WRITE OPERATION. Kill a background process.",
+      "group": "destructive",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "process_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "process_id"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "open_shell_session",
+      "method": "POST",
+      "path": "/api/tools/open_shell_session",
+      "description": "Mở 1 phiên cmd.exe giữ trạng thái (cwd, venv activ...",
+      "group": "execute",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "cwd": {
+            "type": "string"
+          },
+          "venv_python_dir": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "cwd"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "get_file",
+      "method": "POST",
+      "path": "/api/tools/get_file",
+      "description": "Đọc nội dung nhị phân hoặc text an toàn (max 15MB)",
+      "group": "sensitive",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "max_bytes": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "screenshot",
+      "method": "POST",
+      "path": "/api/tools/screenshot",
+      "description": "Chụp ảnh màn hình (desktop, window hwnd, hoặc region)",
+      "group": "sensitive",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "target": {
+            "type": "string",
+            "enum": [
+              "desktop",
+              "window",
+              "region"
+            ]
+          },
+          "monitor": {
+            "type": "integer"
+          },
+          "hwnd": {
+            "type": "integer"
+          },
+          "x": {
+            "type": "integer"
+          },
+          "y": {
+            "type": "integer"
+          },
+          "width": {
+            "type": "integer"
+          },
+          "height": {
+            "type": "integer"
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "jpeg",
+              "png"
+            ]
+          },
+          "max_width": {
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "get_clipboard_text",
+      "method": "POST",
+      "path": "/api/tools/get_clipboard_text",
+      "description": "Đọc văn bản trong clipboard Windows",
+      "group": "sensitive",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "max_chars": {
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "set_clipboard_text",
+      "method": "POST",
+      "path": "/api/tools/set_clipboard_text",
+      "description": "Ghi văn bản vào clipboard Windows",
+      "group": "write",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "list_windows",
+      "method": "POST",
+      "path": "/api/tools/list_windows",
+      "description": "Liệt kê danh sách các cửa sổ đang mở trên desktop kèm HWND",
+      "group": "sensitive",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "title_contains": {
+            "type": "string"
+          },
+          "include_untitled": {
+            "type": "boolean"
+          },
+          "max_results": {
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "focus_window",
+      "method": "POST",
+      "path": "/api/tools/focus_window",
+      "description": "Focus đưa một cửa sổ lên đầu màn hình theo HWND",
+      "group": "execute",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "hwnd": {
+            "type": "integer"
+          },
+          "restore_if_minimized": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "hwnd"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "keyboard_hotkey",
+      "method": "POST",
+      "path": "/api/tools/keyboard_hotkey",
+      "description": "Gửi tổ hợp phím tắt (chuẩn 67 phím whitelist)",
+      "group": "execute",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "keys": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "maxItems": 5
+          },
+          "interval_ms": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "keys"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "start_task",
+      "method": "POST",
+      "path": "/api/tools/start_task",
+      "description": "Khởi chạy một tiến trình ngầm có quản lý (Supervisor daemon)",
+      "group": "execute",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string"
+          },
+          "cwd": {
+            "type": "string"
+          },
+          "env": {
+            "type": "object"
+          },
+          "max_retries": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "command"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "get_task",
+      "method": "POST",
+      "path": "/api/tools/get_task",
+      "description": "Xem trạng thái chi tiết của tiến trình daemon",
+      "group": "sensitive",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "task_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "task_id"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "list_tasks",
+      "method": "POST",
+      "path": "/api/tools/list_tasks",
+      "description": "Liệt kê tất cả các tiến trình daemon",
+      "group": "sensitive",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "limit": {
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "cancel_task",
+      "method": "POST",
+      "path": "/api/tools/cancel_task",
+      "description": "Dừng và hủy một tiến trình daemon",
+      "group": "destructive",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "task_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "task_id"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "get_task_log",
+      "method": "POST",
+      "path": "/api/tools/get_task_log",
+      "description": "Đọc log stdout/stderr của tiến trình daemon",
+      "group": "sensitive",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "task_id": {
+            "type": "string"
+          },
+          "offset": {
+            "type": "integer"
+          },
+          "limit": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "task_id"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "append_file",
+      "method": "POST",
+      "path": "/api/tools/append_file",
+      "description": "WRITE OPERATION. Appends text to a file.",
+      "group": "write",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "content",
+          "path"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "compare_files",
+      "method": "POST",
+      "path": "/api/tools/compare_files",
+      "description": "READ-ONLY. Compare two files.",
+      "group": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path1": {
+            "type": "string"
+          },
+          "path2": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path1",
+          "path2"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "copy_directory",
+      "method": "POST",
+      "path": "/api/tools/copy_directory",
+      "description": "WRITE OPERATION. Copy a directory recursively.",
+      "group": "write",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "src": {
+            "type": "string"
+          },
+          "dest": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "dest",
+          "src"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "copy_file",
+      "method": "POST",
+      "path": "/api/tools/copy_file",
+      "description": "WRITE OPERATION. Copy a file.",
+      "group": "write",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "src": {
+            "type": "string"
+          },
+          "dest": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "dest",
+          "src"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "create_directory",
+      "method": "POST",
+      "path": "/api/tools/create_directory",
+      "description": "WRITE OPERATION. Create a new directory.",
+      "group": "write",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "delegate_to_antigravity",
+      "method": "POST",
+      "path": "/api/tools/delegate_to_antigravity",
+      "description": "WRITE OPERATION. Delegate a mechanical/repetitive ...",
+      "group": "execute",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "task": {
+            "type": "string"
+          },
+          "cwd": {
+            "type": "string"
+          },
+          "allowed_files": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "cwd",
+          "task"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "disk_usage",
+      "method": "POST",
+      "path": "/api/tools/disk_usage",
+      "description": "READ-ONLY. Get disk usage for a specific path.",
+      "group": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "exec_command",
+      "method": "POST",
+      "path": "/api/tools/exec_command",
+      "description": "WRITE OPERATION. Execute a short-lived shell comma...",
+      "group": "execute",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string"
+          },
+          "cwd": {
+            "type": "string"
+          },
+          "shell": {
+            "type": "boolean"
+          },
+          "timeout": {
+            "type": "integer"
+          },
+          "env": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "command",
+          "cwd"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "file_hash",
+      "method": "POST",
+      "path": "/api/tools/file_hash",
+      "description": "READ-ONLY. Calculate SHA256 hash of a file.",
+      "group": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "find_symbol",
+      "method": "POST",
+      "path": "/api/tools/find_symbol",
+      "description": "Quét AST toàn bộ file .py trong 1 thư mục để tìm v...",
+      "group": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "cwd": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "cwd",
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "find_text",
+      "method": "POST",
+      "path": "/api/tools/find_text",
+      "description": "READ-ONLY. Alias for grep.",
+      "group": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "root": {
+            "type": "string"
+          },
+          "pattern": {
+            "type": "string"
+          },
+          "file_glob": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "pattern",
+          "root"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "get_environment",
+      "method": "POST",
+      "path": "/api/tools/get_environment",
+      "description": "READ-ONLY. Get environment variables safely.",
+      "group": "sensitive",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "get_function",
+      "method": "POST",
+      "path": "/api/tools/get_function",
+      "description": "READ-ONLY. Extract only one function/class body fr...",
+      "group": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "path"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "get_process_output",
+      "method": "POST",
+      "path": "/api/tools/get_process_output",
+      "description": "READ-ONLY. Retrieve stdout/stderr for a background...",
+      "group": "sensitive",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "process_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "process_id"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "get_roots",
+      "method": "POST",
+      "path": "/api/tools/get_roots",
+      "description": "READ-ONLY. Retrieve all filesystem roots (drives o...",
+      "group": "sensitive",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "git_branch",
+      "method": "POST",
+      "path": "/api/tools/git_branch",
+      "description": "READ-ONLY. Get git branches.",
+      "group": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "repo_path": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "repo_path"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "git_commit",
+      "method": "POST",
+      "path": "/api/tools/git_commit",
+      "description": "WRITE OPERATION. Commit changes.",
+      "group": "write",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "repo_path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "add_all": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "message",
+          "repo_path"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "git_diff",
+      "method": "POST",
+      "path": "/api/tools/git_diff",
+      "description": "Xem diff hiện tại (working tree hoặc staged) của 1...",
+      "group": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "cwd": {
+            "type": "string"
+          },
+          "staged": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "cwd"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "git_log",
+      "method": "POST",
+      "path": "/api/tools/git_log",
+      "description": "Xem lịch sử commit gần nhất (oneline).",
+      "group": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "cwd": {
+            "type": "string"
+          },
+          "n": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "cwd"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "git_status",
+      "method": "POST",
+      "path": "/api/tools/git_status",
+      "description": "Xem trạng thái file modified/untracked (git status...",
+      "group": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "cwd": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "cwd"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "grep",
+      "method": "POST",
+      "path": "/api/tools/grep",
+      "description": "READ-ONLY. Search for text/regex inside files.",
+      "group": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "root": {
+            "type": "string"
+          },
+          "pattern": {
+            "type": "string"
+          },
+          "file_glob": {
+            "type": "string"
+          },
+          "regex": {
+            "type": "boolean"
+          },
+          "case_sensitive": {
+            "type": "boolean"
+          },
+          "max_results": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "pattern",
+          "root"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "list_directory",
+      "method": "POST",
+      "path": "/api/tools/list_directory",
+      "description": "READ-ONLY. List contents of a directory.",
+      "group": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "include_hidden": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "list_processes",
+      "method": "POST",
+      "path": "/api/tools/list_processes",
+      "description": "READ-ONLY. List all managed background processes.",
+      "group": "sensitive",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "list_tree",
+      "method": "POST",
+      "path": "/api/tools/list_tree",
+      "description": "READ-ONLY. Get recursive tree view.",
+      "group": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "max_depth": {
+            "type": "integer"
+          },
+          "max_entries": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "move_file",
+      "method": "POST",
+      "path": "/api/tools/move_file",
+      "description": "WRITE OPERATION. Move/Rename a file.",
+      "group": "write",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "src": {
+            "type": "string"
+          },
+          "dest": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "dest",
+          "src"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "patch_file",
+      "method": "POST",
+      "path": "/api/tools/patch_file",
+      "description": "WRITE OPERATION. Applies search/replace blocks to ...",
+      "group": "write",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "patch": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "patch",
+          "path"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "path_exists",
+      "method": "POST",
+      "path": "/api/tools/path_exists",
+      "description": "READ-ONLY. Check if path exists.",
+      "group": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "process_status",
+      "method": "POST",
+      "path": "/api/tools/process_status",
+      "description": "READ-ONLY. Check the status of a background proces...",
+      "group": "sensitive",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "process_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "process_id"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "read_binary_metadata",
+      "method": "POST",
+      "path": "/api/tools/read_binary_metadata",
+      "description": "READ-ONLY. Get basic info about a binary file.",
+      "group": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "read_file",
+      "method": "POST",
+      "path": "/api/tools/read_file",
+      "description": "READ-ONLY. Read a text file from the local compute...",
+      "group": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "read_file_range",
+      "method": "POST",
+      "path": "/api/tools/read_file_range",
+      "description": "READ-ONLY. Read a specific range of lines.",
+      "group": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "start_line": {
+            "type": "integer"
+          },
+          "end_line": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "end_line",
+          "path",
+          "start_line"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "read_text",
+      "method": "POST",
+      "path": "/api/tools/read_text",
+      "description": "READ-ONLY. Alias for read_file.",
+      "group": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "rename_path",
+      "method": "POST",
+      "path": "/api/tools/rename_path",
+      "description": "WRITE OPERATION. Rename a file or directory.",
+      "group": "write",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "src": {
+            "type": "string"
+          },
+          "dest": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "dest",
+          "src"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "replace_text",
+      "method": "POST",
+      "path": "/api/tools/replace_text",
+      "description": "WRITE OPERATION. Replaces all occurrences of old_t...",
+      "group": "write",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "old_text": {
+            "type": "string"
+          },
+          "new_text": {
+            "type": "string"
+          },
+          "expected_occurrences": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "new_text",
+          "old_text",
+          "path"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "repo_map",
+      "method": "POST",
+      "path": "/api/tools/repo_map",
+      "description": "Tạo bản đồ tổng quan cấu trúc thư mục + chữ ký fun...",
+      "group": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "cwd": {
+            "type": "string"
+          },
+          "max_depth": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "cwd"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "run_lint",
+      "method": "POST",
+      "path": "/api/tools/run_lint",
+      "description": "Chạy ruff check trong 1 thư mục project, trả về da...",
+      "group": "execute",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "cwd": {
+            "type": "string"
+          },
+          "venv_python": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "cwd"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "run_tests",
+      "method": "POST",
+      "path": "/api/tools/run_tests",
+      "description": "Chạy pytest trong 1 thư mục project, trả về summar...",
+      "group": "execute",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "cwd": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "venv_python": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "cwd"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "screenshot_localhost",
+      "method": "POST",
+      "path": "/api/tools/screenshot_localhost",
+      "description": "Mở 1 URL localhost bằng headless Chromium, chụp ản...",
+      "group": "execute",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "width": {
+            "type": "integer"
+          },
+          "height": {
+            "type": "integer"
+          },
+          "full_page": {
+            "type": "boolean"
+          },
+          "wait_ms": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "search_code",
+      "method": "POST",
+      "path": "/api/tools/search_code",
+      "description": "Tìm text/regex trong toàn bộ source code của 1 thư...",
+      "group": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "pattern": {
+            "type": "string"
+          },
+          "cwd": {
+            "type": "string"
+          },
+          "file_glob": {
+            "type": "string"
+          },
+          "max_results": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "cwd",
+          "pattern"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "search_files",
+      "method": "POST",
+      "path": "/api/tools/search_files",
+      "description": "READ-ONLY. Search for files by name/extension.",
+      "group": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "root": {
+            "type": "string"
+          },
+          "pattern": {
+            "type": "string"
+          },
+          "recursive": {
+            "type": "boolean"
+          },
+          "max_results": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "pattern",
+          "root"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "send_process_input",
+      "method": "POST",
+      "path": "/api/tools/send_process_input",
+      "description": "WRITE OPERATION. Send input (stdin) to a backgroun...",
+      "group": "execute",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "process_id": {
+            "type": "string"
+          },
+          "input_data": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "input_data",
+          "process_id"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "start_process",
+      "method": "POST",
+      "path": "/api/tools/start_process",
+      "description": "WRITE OPERATION. Start a long-running process in t...",
+      "group": "execute",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string"
+          },
+          "cwd": {
+            "type": "string"
+          },
+          "env": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "command",
+          "cwd"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "stat_path",
+      "method": "POST",
+      "path": "/api/tools/stat_path",
+      "description": "READ-ONLY. Get file or directory metadata.",
+      "group": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "system_info",
+      "method": "POST",
+      "path": "/api/tools/system_info",
+      "description": "READ-ONLY. Get system information (OS, CPU, RAM).",
+      "group": "sensitive",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "unzip_archive",
+      "method": "POST",
+      "path": "/api/tools/unzip_archive",
+      "description": "WRITE OPERATION. Unzip an archive with zip-slip pr...",
+      "group": "write",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "zip_path": {
+            "type": "string"
+          },
+          "dest_dir": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "dest_dir",
+          "zip_path"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "which_command",
+      "method": "POST",
+      "path": "/api/tools/which_command",
+      "description": "READ-ONLY. Locate an executable.",
+      "group": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "command": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "command"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "write_file",
+      "method": "POST",
+      "path": "/api/tools/write_file",
+      "description": "WRITE OPERATION. Creates or overwrites a file.",
+      "group": "write",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "create_parents": {
+            "type": "boolean"
+          },
+          "overwrite": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "content",
+          "path"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "zip_directory",
+      "method": "POST",
+      "path": "/api/tools/zip_directory",
+      "description": "WRITE OPERATION. Zip a directory.",
+      "group": "write",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "src_dir": {
+            "type": "string"
+          },
+          "dest_zip": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "dest_zip",
+          "src_dir"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "health_route_helper",
+      "method": "GET",
+      "path": "/health",
+      "description": "Check local backend health",
+      "group": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "job_poll_helper",
+      "method": "GET",
+      "path": "/api/tools/poll_job/{job_id}",
+      "description": "Poll a background job",
+      "group": "read",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "job_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "job_id"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    },
+    {
+      "name": "job_cancel_helper",
+      "method": "POST",
+      "path": "/api/tools/cancel_job/{job_id}",
+      "description": "Cancel a background job",
+      "group": "destructive",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "job_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "job_id"
+        ],
+        "additionalProperties": false
+      },
+      "inventory_only": true
+    }
+  ]
+}

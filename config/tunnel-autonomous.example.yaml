@@ -1,0 +1,29 @@
+# ==============================================================================
+# Windows MCP Autonomous Agent — Cloud Tunnel Configuration Profile (Example)
+# ==============================================================================
+# Copy this file to config/tunnel-autonomous.yaml (local-only, git-ignored) and
+# replace the placeholder tunnel_id with your provisioned OpenAI Tunnel ID.
+# Never commit real tunnel IDs, local key file paths, or runtime tokens to Git.
+# ==============================================================================
+
+config_version: 1
+control_plane:
+  base_url: "https://api.openai.com"
+  tunnel_id: "tunnel_0123456789abcdef0123456789abcdef"
+  api_key: "env:CONTROL_PLANE_API_KEY"
+health:
+  listen_addr: "127.0.0.1:0"
+  url_file: "runtime/logs/windows-mcp-autonomous-health.url"
+admin_ui:
+  open_browser: false
+log:
+  level: info
+  format: json
+mcp:
+  extra_headers:
+    Authorization: "Bearer env:WINDOWS_MCP_AUTONOMOUS_TOKEN"
+  discovery_extra_headers:
+    Authorization: "Bearer env:WINDOWS_MCP_AUTONOMOUS_TOKEN"
+  server_urls:
+    - channel: main
+      url: "http://127.0.0.1:8768/mcp"
