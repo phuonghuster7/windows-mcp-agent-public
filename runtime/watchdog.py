@@ -1,4 +1,4 @@
-"""Production-grade Windows Supervisor & Watchdog Daemon for the Windows MCP Agent Stack.
+"""Production-grade Windows Supervisor & Watchdog Daemon for the WinOwner MCP Stack.
 
 Monitors and heals the dependency chain in strict order:
   1) FastAPI Backend (http://127.0.0.1:3080/health)
@@ -2729,7 +2729,7 @@ class WatchdogSupervisor:
 # ---------------------------------------------------------------------------
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Windows MCP Agent Supervisor & Watchdog Daemon"
+        description="WinOwner MCP Supervisor & Watchdog Daemon"
     )
     mode_group = parser.add_mutually_exclusive_group()
     mode_group.add_argument(
