@@ -1,7 +1,7 @@
 # Windows MCP Agent — Runtime Dependencies
 # Pinned for Python 3.12+ (Windows 10/11 x64)
 
-fastapi==0.136.3
+fastapi==0.162.0
 uvicorn==0.46.0
 pydantic==2.13.3
 pydantic-settings==2.14.0
