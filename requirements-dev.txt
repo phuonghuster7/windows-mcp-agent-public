@@ -1,4 +1,4 @@
-# Windows MCP Agent — Development and Testing Dependencies
+# WinOwner MCP — Development and Testing Dependencies
 -r requirements.txt
 
 pytest==9.1.1

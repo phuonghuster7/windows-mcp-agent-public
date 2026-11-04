@@ -1,1 +1,1 @@
-"""MCP Gateway package for Windows MCP Agent."""
+"""MCP Gateway package for WinOwner MCP."""

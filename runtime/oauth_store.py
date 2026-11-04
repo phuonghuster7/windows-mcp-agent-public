@@ -1,4 +1,4 @@
-"""Durable SQLite OAuth State Store for Windows MCP Agent (RFC 8414, RFC 7636, Finding H07).
+"""Durable SQLite OAuth State Store for WinOwner MCP (RFC 8414, RFC 7636, Finding H07).
 
 Provides durable, multi-process SQLite persistence for:
 1. Token Revocations (oauth_revocations): Survives process restarts and pruning on expiry.

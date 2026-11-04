@@ -1,7 +1,7 @@
 """Stage S4 — Mode B Owner-Controlled Web Agent Console (Local-First, Account-Independent).
 
 Provides a production-grade, local-first, browser-accessible Web Control Surface for the
-Windows MCP Agent when ChatGPT Web native MCP is unavailable (e.g., on ChatGPT Plus plans
+WinOwner MCP when ChatGPT Web native MCP is unavailable (e.g., on ChatGPT Plus plans
 where custom MCP connectors are plan-gated) or when direct owner-supervised browser control
 is desired.
 
@@ -495,7 +495,7 @@ CONSOLE_HTML_PAGE = """<!DOCTYPE html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Windows MCP Agent — Mode B Owner Control Console</title>
+  <title>WinOwner MCP — Mode B Owner Control Console</title>
   <style>
     :root {
       --bg: #0b0f19;
@@ -692,7 +692,7 @@ CONSOLE_HTML_PAGE = """<!DOCTYPE html>
 
   <header>
     <div class="brand">
-      <span>Windows MCP Agent — Mode B Console</span>
+      <span>WinOwner MCP — Mode B Console</span>
       <span id="profile-badge" class="badge">Profile: loading...</span>
       <span id="session-badge" class="badge warn">No Active ControlSession</span>
       <span id="estop-badge" class="badge success">Emergency Stop: READY</span>
@@ -1130,7 +1130,7 @@ def create_web_console_app(
     failed_login_attempts: dict[str, list[float]] = {}
 
     app = FastAPI(
-        title="Windows MCP Agent — Mode B Owner Web Console",
+        title="WinOwner MCP — Mode B Owner Web Console",
         version=gw.server_version,
         docs_url=None,
         redoc_url=None,

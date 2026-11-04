@@ -1,4 +1,4 @@
-# Windows MCP Agent — Runtime Dependencies
+# WinOwner MCP — Runtime Dependencies
 # Pinned for Python 3.12+ (Windows 10/11 x64)
 
 fastapi==0.136.3
