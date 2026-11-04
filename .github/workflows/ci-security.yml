@@ -62,6 +62,16 @@ jobs:
           python -m pytest -q tests/test_red_team_security.py tests/test_mcp_gateway.py --deselect=tests/test_red_team_security.py::TestRedTeamSecurity::test_17_backend_direct_calls_without_credentials_are_denied --deselect=tests/test_red_team_security.py::TestRedTeamSecurity::test_18_unapproved_cloud_connector_cannot_access_advanced_capabilities --deselect=tests/test_red_team_security.py::TestRedTeamSecurity::test_20_rollback_restores_last_known_good_state
           python -m pytest -q tests/test_owner_full_control.py tests/test_oauth_dynamic_owner.py tests/test_direct_coding_security.py
 
+      - name: P0 redirect, pass-the-hash and loopback regression tests
+        shell: pwsh
+        run: |
+          python -m pytest -q tests/test_p0_bootstrap_auth_regressions.py
+
+      - name: Single-line bootstrap safety dry-run
+        shell: pwsh
+        run: |
+          powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Bootstrap-WindowsMcp.ps1 -DryRun -Port 18769
+
       - name: Installer dry-run, no services started
         shell: pwsh
         run: |

@@ -18,7 +18,19 @@ Windows-local Model Context Protocol (MCP) tooling for an authorized ChatGPT cli
 
 All services should remain bound to localhost. Cloud access requires your own authorized tunnel and OAuth configuration; this repository never ships usable tunnel credentials. Available tools vary by connector configuration.
 
-## Getting started / Bắt đầu
+## One-line Windows bootstrap (local MCP only)
+
+**Paste one PowerShell line** (Git must be installed; missing Python 3.12 is installed via winget where available):
+
+```powershell
+git clone https://github.com/phuonghuster7/windows-mcp-agent-public.git winowner-mcp; if ($LASTEXITCODE -eq 0) { powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\winowner-mcp\scripts\Bootstrap-WindowsMcp.ps1" }
+```
+
+Bootstrapping creates an isolated Python environment, installs dependencies, configures loopback-only read-only operation and a protected local token, starts the standalone adapter, and checks `/health` plus anonymous MCP denial. Port 8768 must be free; existing services are never terminated.
+
+**LOCAL_INSTALL_PASS is not remote connector authorization.** ChatGPT, Claude or another MCP client must still be paired using the owner's OAuth identity and a separate authenticated tunnel. `OWNER_GLOBAL_FILESYSTEM` is not enabled by installation. See [Connect ChatGPT](docs/CONNECT_CHATGPT.md).
+
+## Getting started / Manual installation
 
 Use a clean disposable Windows checkout rather than a live production directory.
 

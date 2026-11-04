@@ -341,7 +341,7 @@ class DurableOAuthStore:
             return False, None
         candidate_hash = hashlib.sha256(client_secret.encode("utf-8")).hexdigest()
         stored_hash = client.get("client_secret_hash", "")
-        if hmac.compare_digest(stored_hash, candidate_hash) or hmac.compare_digest(stored_hash, client_secret):
+        if hmac.compare_digest(stored_hash, candidate_hash):
             return True, client
         return False, None
 

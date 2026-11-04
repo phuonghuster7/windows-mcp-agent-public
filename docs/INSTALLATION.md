@@ -13,6 +13,18 @@ Run in a fresh directory or disposable VM:
     py -3.12 -m venv .venv
     .\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
 
+## One-line local setup
+
+Prerequisite: Git on Windows. Paste into PowerShell:
+
+```powershell
+git clone https://github.com/phuonghuster7/windows-mcp-agent-public.git winowner-mcp; if ($LASTEXITCODE -eq 0) { powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\winowner-mcp\scripts\Bootstrap-WindowsMcp.ps1" }
+```
+
+The bootstrap automatically creates the Python 3.12 virtual environment, installs dependencies, configures local read-only operation, creates a user-restricted local bearer credential, starts only the standalone 8768 adapter, then checks /health and unauthenticated denial. It fails if port 8768 is occupied; no existing process is killed. It may use winget to install Python 3.12 if missing. Git itself cannot install or OAuth-pair an agent.
+
+**LOCAL_INSTALL_PASS does NOT mean the ChatGPT connector is connected.** The operator must complete owner OAuth and private tunnel pairing using docs/CONNECT_CHATGPT.md. Owner full filesystem privileges are never provisioned automatically.
+
 ## Verify installer before modifying your workstation
 
     powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Install-WindowsMcpAgent.ps1 -DryRun
