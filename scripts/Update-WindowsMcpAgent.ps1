@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Safe, transactional update script for the Windows MCP Agent Stack (Stage S6 / P6).
+    Safe, transactional update script for the WinOwner MCP Stack (Stage S6 / P6).
 
 .DESCRIPTION
     1. Creates a timestamped backup snapshot of current code and configuration
@@ -238,7 +238,7 @@ if (Test-Path $reportDir) {
 
 $modeText = $(if ($DryRun) { "DRY-RUN" } elseif ($SimulateFailure) { "ROLLBACK-DRILL" } else { "LIVE UPDATE" })
 Write-Host "==========================================================================================" -ForegroundColor Cyan
-Write-Host " Windows MCP Agent Updater ($modeText) -> Status: $($reportObj.overall_status)" -ForegroundColor $(if ($overallOk) { "Green" } else { "Red" })
+Write-Host " WinOwner MCP Updater ($modeText) -> Status: $($reportObj.overall_status)" -ForegroundColor $(if ($overallOk) { "Green" } else { "Red" })
 Write-Host " BackedUp: $($manifestEntries.Count) | SecretsPreserved: $secretsPreserved | RolledBack: $rolledBack" -ForegroundColor Cyan
 Write-Host "==========================================================================================" -ForegroundColor Cyan
 

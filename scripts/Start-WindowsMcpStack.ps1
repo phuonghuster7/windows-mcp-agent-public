@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Cleanly starts and supervises the Windows MCP Agent Stack (Backend -> Bridge -> Tunnel)
+    Cleanly starts and supervises the WinOwner MCP Stack (Backend -> Bridge -> Tunnel)
     without requiring a visible terminal window to stay open.
 
 .DESCRIPTION

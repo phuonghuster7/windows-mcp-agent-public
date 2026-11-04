@@ -1,12 +1,12 @@
 <#
 .SYNOPSIS
-    Safe, fail-closed uninstaller for the Windows MCP Agent Stack (Stage S6 / P6).
+    Safe, fail-closed uninstaller for the WinOwner MCP Stack (Stage S6 / P6).
 
 .DESCRIPTION
     1. Enforces a mandatory fail-safe: requires either `-DryRun` or `-ConfirmUninstall`.
     2. Unregisters Scheduled Task `WindowsMcpAgentWatchdog` (only when targeting primary
        root and not `-DryRun`).
-    3. Stops only managed Windows MCP Agent processes associated with `-TargetRoot`
+    3. Stops only managed WinOwner MCP processes associated with `-TargetRoot`
        (never touching `codex-chatgpt-web` / `tunnel_unconfigured_legacy`).
     4. Removes runtime artifacts and installed modules under `-TargetRoot` while
        preserving `backups\` (unless `-PurgeBackups`) and `runtime\secrets\` (unless `-PurgeSecrets`).
@@ -166,7 +166,7 @@ if (Test-Path $reportOutDir) {
 
 $modeText = $(if ($DryRun) { "DRY-RUN" } else { "CONFIRMED UNINSTALL" })
 Write-Host "==========================================================================================" -ForegroundColor Cyan
-Write-Host " Windows MCP Agent Uninstaller ($modeText) -> Status: PASS" -ForegroundColor Green
+Write-Host " WinOwner MCP Uninstaller ($modeText) -> Status: PASS" -ForegroundColor Green
 Write-Host " TargetRoot: $TargetRoot | PreservedBackups: $(-not $PurgeBackups) | PreservedSecrets: $(-not $PurgeSecrets)" -ForegroundColor Cyan
 Write-Host "==========================================================================================" -ForegroundColor Cyan
 exit 0

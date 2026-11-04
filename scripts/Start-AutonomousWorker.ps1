@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Start the Unattended Autonomous Worker Daemon for Windows MCP Agent.
+    Start the Unattended Autonomous Worker Daemon for WinOwner MCP.
 .DESCRIPTION
     Runs the persistent autonomous task worker background daemon, which claims
     QUEUED tasks under valid TaskGrants and executes them with durable checkpoints.

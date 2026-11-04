@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Verifiable rollback script for the Windows MCP Agent Stack (P0 Baseline).
+    Verifiable rollback script for the WinOwner MCP Stack (P0 Baseline).
 
 .DESCRIPTION
     1. Reads `D:\ExampleProjects\Windows-MCP-Agent\backups\baseline_p0\baseline_hashes.json`.
@@ -128,7 +128,7 @@ foreach ($entry in $manifest.files) {
 $modeLabel = $(if ($DryRun) { "DRY-RUN VERIFICATION" } else { "LIVE ROLLBACK" })
 Write-Host ""
 Write-Host "==========================================================================================" -ForegroundColor Cyan
-Write-Host " Windows MCP Agent Stack - Baseline P0 Rollback ($modeLabel)" -ForegroundColor Cyan
+Write-Host " WinOwner MCP Stack - Baseline P0 Rollback ($modeLabel)" -ForegroundColor Cyan
 Write-Host "==========================================================================================" -ForegroundColor Cyan
 $results | Format-Table -AutoSize
 

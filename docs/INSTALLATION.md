@@ -1,4 +1,4 @@
-# Installation — Windows MCP Agent (v1.0.0-rc3 candidate)
+# Installation — WinOwner MCP (v1.0.0-rc3 candidate)
 
 ## Prerequisites
 
@@ -8,8 +8,8 @@ Use Windows 10/11 x64, PowerShell 5.1+ (or PowerShell 7), Python 3.12+, Git, and
 
 Run in a fresh directory or disposable VM:
 
-    git clone https://github.com/phuonghuster7/windows-mcp-agent-public windows-mcp-agent
-    cd windows-mcp-agent
+    git clone https://github.com/phuonghuster7/winowner-mcp.git winowner-mcp
+    cd winowner-mcp
     py -3.12 -m venv .venv
     .\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
 
