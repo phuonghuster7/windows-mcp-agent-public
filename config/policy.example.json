@@ -1,0 +1,273 @@
+{
+  "version": "1.2.0",
+  "default_profile": "read_only",
+  "profiles": {
+    "read_only": {
+      "enabled_tiers": [
+        "READ"
+      ],
+      "strict_v021_read_tools_only": true
+    },
+    "developer_p2": {
+      "enabled_tiers": [
+        "READ",
+        "WRITE",
+        "EXECUTE"
+      ],
+      "strict_v021_read_tools_only": false
+    },
+    "desktop_p3": {
+      "enabled_tiers": [
+        "READ",
+        "DESKTOP"
+      ],
+      "strict_v021_read_tools_only": false
+    },
+    "full_agent": {
+      "enabled_tiers": [
+        "READ",
+        "WRITE",
+        "EXECUTE",
+        "DESKTOP"
+      ],
+      "strict_v021_read_tools_only": false
+    },
+    "owner_full_control": {
+      "enabled_tiers": [
+        "READ",
+        "WRITE",
+        "EXECUTE",
+        "DESKTOP",
+        "SYSTEM_ADMIN"
+      ],
+      "strict_v021_read_tools_only": false,
+      "unrestricted_workspace_access": true,
+      "description": "Full owner control mode for paired owner; access across all drives and administrative tools within Windows user privileges"
+    }
+  },
+  "tiers": {
+    "READ": {
+      "enabled": true,
+      "require_approval_token": false,
+      "description": "Filesystem metadata, text read, search, Git read, screenshot, window inspection"
+    },
+    "WRITE": {
+      "enabled": false,
+      "require_approval_token": true,
+      "require_writable_root": true,
+      "description": "Create, modify, rename, move, recoverable delete inside allowed writable roots"
+    },
+    "EXECUTE": {
+      "enabled": false,
+      "require_approval_token": true,
+      "allowlisted_commands_only": false,
+      "description": "Run approved PowerShell/CMD/Python commands, tests, and background jobs"
+    },
+    "DESKTOP": {
+      "enabled": false,
+      "require_approval_token": true,
+      "require_interactive_session": true,
+      "require_unlocked_desktop": true,
+      "description": "Mouse, keyboard, window focus, clipboard"
+    },
+    "SYSTEM_ADMIN": {
+      "enabled": false,
+      "blocked_by_default": true,
+      "require_approval_token": true,
+      "description": "High-impact system changes blocked by default"
+    }
+  },
+  "allowed_read_roots": [
+    "AUTO"
+  ],
+  "allowed_write_roots": [
+    ".",
+    "benchmarks/codex_like_eval"
+  ],
+  "allowed_git_repos": [
+    ".",
+    "benchmarks/codex_like_eval"
+  ],
+  "allowed_exec_roots": [
+    ".",
+    "benchmarks/codex_like_eval"
+  ],
+  "sensitive_paths": {
+    "blocked_path_parts": [
+      ".env",
+      ".ssh",
+      ".aws",
+      ".azure",
+      ".gcp",
+      ".git-credentials",
+      "id_rsa",
+      "id_ed25519",
+      "id_ecdsa",
+      "id_dsa",
+      ".gnupg",
+      ".pgp",
+      "credentials.json",
+      "secrets.json",
+      "token.json",
+      "private.key",
+      "private.pem",
+      "service-account.json",
+      ".npmrc",
+      ".pypirc",
+      ".docker",
+      ".kube",
+      "login data",
+      "cookies",
+      "web data",
+      "user data",
+      "wallets",
+      ".bitcoin",
+      ".ethereum",
+      "vault",
+      "credentials",
+      "tunnel-client",
+      "protect"
+    ],
+    "blocked_subpaths": [
+      "appdata\\roaming\\tunnel-client",
+      "appdata\\roaming\\microsoft\\protect",
+      "appdata\\local\\microsoft\\credentials",
+      "appdata\\roaming\\microsoft\\credentials",
+      "appdata\\local\\google\\chrome\\user data",
+      "appdata\\local\\microsoft\\edge\\user data",
+      "appdata\\roaming\\mozilla\\firefox\\profiles",
+      ".git\\config"
+    ],
+    "blocked_filenames": [
+      ".env",
+      ".env.local",
+      ".env.production",
+      ".env.development",
+      ".netrc",
+      "_netrc",
+      "id_rsa",
+      "id_ed25519",
+      "id_ecdsa",
+      "id_dsa",
+      "known_hosts",
+      "authorized_keys",
+      ".git-credentials",
+      ".gitconfig",
+      "credentials.json",
+      "secrets.json",
+      "token.json",
+      "service-account.json",
+      "private.key",
+      "private.pem",
+      "master.key",
+      "encryption.key",
+      "tunnel-runtime-automatic.key"
+    ],
+    "blocked_extensions": [
+      ".pem",
+      ".p12",
+      ".pfx",
+      ".key",
+      ".keystore",
+      ".jks",
+      ".kdbx",
+      ".kdb",
+      ".rdp"
+    ]
+  },
+  "command_policy": {
+    "allowlisted_prefixes": [
+      "python",
+      "pytest",
+      "git",
+      "ruff",
+      "echo",
+      "Write-Output",
+      "Write-Host",
+      "Get-",
+      "Select-Object",
+      "Where-Object",
+      "Measure-Object",
+      "dir",
+      "type",
+      "ver",
+      "whoami"
+    ],
+    "blocked_patterns": [
+      "Format-Volume",
+      "Format-Disk",
+      "Clear-Disk",
+      "Initialize-Disk",
+      "Set-MpPreference",
+      "Add-MpPreference",
+      "Remove-MpPreference",
+      "DisableRealtimeMonitoring",
+      "WinDefend",
+      "MpCmdRun",
+      "netsh\\s+advfirewall",
+      "netsh\\s+firewall",
+      "New-NetFirewallRule",
+      "Set-NetFirewallProfile",
+      "Set-NetFirewallRule",
+      "Disable-NetFirewallRule",
+      "Remove-NetFirewallRule",
+      "EnableLUA",
+      "ConsentPromptBehavior",
+      "PromptOnSecureDesktop",
+      "CurrentVersion\\\\Policies\\\\System",
+      "schtasks(?:\\.exe)?\\s+/(?:create|change|delete|run)\\b",
+      "\\b(?:Register-ScheduledTask|New-ScheduledTask|Set-ScheduledTask|Unregister-ScheduledTask)\\b",
+      "\\bsc(?:\\.exe)?\\s+(?:create|config|delete|stop|start|failure)\\b",
+      "\\b(?:New-Service|Set-Service|Remove-Service)\\b",
+      "vssadmin\\s+delete\\s+shadows",
+      "wbadmin\\s+delete",
+      "bcdedit",
+      "cipher\\s+/w",
+      "diskpart",
+      "reg\\s+(?:add|delete)\\s+HKLM",
+      "Stop-Computer",
+      "Restart-Computer",
+      "shutdown\\s+/[sr]",
+      "Remove-Item\\s+.*-Recurse.*C:\\\\\\s*$",
+      "rd\\s+/s\\s+/q\\s+C:\\\\",
+      "del\\s+/f\\s+/s\\s+/q\\s+C:\\\\",
+      "-(?:EncodedCommand|enc|ec)\\b",
+      "\\b(?:Invoke-Expression|iex)\\b",
+      "Start-Process\\b.*-Verb\\s+['\"]?RunAs",
+      "-Verb\\s+['\"]?RunAs",
+      "\\b(?:DownloadString|DownloadFile)\\b"
+    ],
+    "default_timeout_seconds": 30,
+    "max_timeout_seconds": 300,
+    "max_output_bytes": 120000
+  },
+  "desktop_policy": {
+    "emergency_stop_file": "runtime/EMERGENCY_STOP",
+    "max_screenshot_bytes": 5242880,
+    "sensitive_window_keywords": [
+      "1password",
+      "bitwarden",
+      "keepass",
+      "lastpass",
+      "dashlane",
+      "windows security",
+      "credential manager",
+      "metamask",
+      "ledger live",
+      "banking",
+      "password manager",
+      "uac"
+    ]
+  },
+  "audit": {
+    "log_path": "runtime/logs/audit.jsonl",
+    "redact_secrets": true
+  },
+  "session_policy": {
+    "default_ttl_seconds": 3600,
+    "max_ttl_seconds": 28800,
+    "require_session_for_privileged": true,
+    "reject_forged_or_expired_credentials": true,
+    "reject_argument_credential_smuggling": true
+  }
+}

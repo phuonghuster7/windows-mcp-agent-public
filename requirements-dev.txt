@@ -1,0 +1,9 @@
+# Windows MCP Agent — Development and Testing Dependencies
+-r requirements.txt
+
+pytest==9.1.1
+pytest-asyncio==1.4.0
+httpx==0.28.1
+httpx-sse==0.4.3
+ruff==0.8.0
+
