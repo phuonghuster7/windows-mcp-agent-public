@@ -99,7 +99,7 @@ Register-ScheduledTask `
     -Trigger $trigger `
     -Settings $settings `
     -Principal $principal `
-    -Description "Supervises Windows MCP Agent Stack (FastAPI Backend 3080 -> MCP Bridge 8765 -> Secure Tunnel windows-mcp-isolated) in interactive user session." `
+    -Description "Supervises WinOwner MCP Stack (FastAPI Backend 3080 -> MCP Bridge 8765 -> Secure Tunnel windows-mcp-isolated) in interactive user session." `
     -Force | Out-Null
 
 $registered = Get-ScheduledTask -TaskName $TaskName

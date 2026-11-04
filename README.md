@@ -1,59 +1,87 @@
-# Windows MCP Agent — Release Candidate
+# WinOwner MCP
 
-Windows-local Model Context Protocol (MCP) tooling for an authorized ChatGPT client: file operations, coding, Git inspection, desktop interaction, autonomous tasks, OAuth owner authorization and audit.
+**Your Windows. Your AI. Your Control.**
 
-**Status:** v1.0.0-rc3 source candidate (2026-11-04). Experimental, security-sensitive software; not independently certified for public deployment.
+Owner-authorized remote coding and desktop automation for Windows through the Model Context Protocol (MCP).
 
-**Language:** English / Tiếng Việt. Recommended: Windows 10/11 (x64), Python 3.12+, Git and PowerShell 5.1+.
+[![CI](https://github.com/phuonghuster7/winowner-mcp/actions/workflows/ci-security.yml/badge.svg)](https://github.com/phuonghuster7/winowner-mcp/actions/workflows/ci-security.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![Python 3.12](https://img.shields.io/badge/Python-3.12-blue)
+![Windows 10/11](https://img.shields.io/badge/platform-Windows%2010%2F11-blue)
+![Release](https://img.shields.io/badge/release-v1.0.0--rc3-orange)
 
-## Components
+[Tiếng Việt](README.vi.md) · [Installation](docs/INSTALLATION.md) · [Connect ChatGPT](docs/CONNECT_CHATGPT.md) · [Security](SECURITY.md) · [Releases](https://github.com/phuonghuster7/winowner-mcp/releases)
 
-| Local endpoint | Purpose |
-| --- | --- |
-| 127.0.0.1:3080 | Core backend |
-| 127.0.0.1:8765 | Read-only MCP bridge |
-| 127.0.0.1:8766 | Policy-gated staging gateway |
-| 127.0.0.1:8767 | Local owner console |
-| 127.0.0.1:8768 | Authenticated cloud/owner adapter |
+> **Security-sensitive prerelease.** An AI client can perform actions using the permissions of the Windows account running the agent. This is not a sandbox or an independently certified security product. Do not expose an unauthenticated MCP endpoint publicly.
 
-All services should remain bound to localhost. Cloud access requires your own authorized tunnel and OAuth configuration; this repository never ships usable tunnel credentials. Available tools vary by connector configuration.
+## What WinOwner MCP does
 
-## Getting started / Bắt đầu
+- **Remote coding:** inspect repositories, read and patch files, run commands and tests, review Git changes.
+- **Owner verification:** OAuth 2.1 / PKCE S256, capability grants and revocable authorizations.
+- **Recoverable changes:** SHA-256 file preconditions, backup/rollback tooling and audit records.
+- **Windows control:** desktop interaction and task management when deliberately authorized.
+- **Security controls:** a read-only default profile, owner console and emergency stop.
 
-Use a clean disposable Windows checkout rather than a live production directory.
+OAuth alone is not a differentiator. WinOwner's focus is the combination of *owner authorization, scoped execution and auditable, recoverable changes*.
 
-    git clone https://github.com/phuonghuster7/windows-mcp-agent-public windows-mcp-agent
-    cd windows-mcp-agent
-    py -3.12 -m venv .venv
-    .\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
-    powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Install-WindowsMcpAgent.ps1 -DryRun
+## Client compatibility
 
-Read [Installation](docs/INSTALLATION.md) before enabling any network connection. The installer dry-run verifies prerequisites; it does not establish ChatGPT connectivity.
+| Client | Status | Notes |
+|---|---|---|
+| ChatGPT | Verified on an owner's RC3 installation | Private tunnel and OAuth required |
+| Claude, Cursor, Codex, other MCP clients | Not yet verified | Compatibility must be tested per client |
 
-## Authorization
+## Architecture
 
-- Install with least-privileged/read_only profile by default.
-- Write, execution and desktop actions require a trusted session and authorization.
-- OWNER_GLOBAL_FILESYSTEM is an explicit opt-in available only to an authenticated owner; it obeys Windows account permissions and is not a bypass of NTFS or UAC.
-- Do not enable owner-global access on shared/untrusted clients, publish local service endpoints or disable authorization, audit, backup and emergency stop.
-- Arbitrary execution has the full rights of the running Windows account; this is **not a sandbox**.
+```mermaid
+flowchart LR
+    AI["MCP client<br/>(ChatGPT verified)"] --> T["Operator-managed<br/>authenticated tunnel"]
+    T --> A["Owner OAuth MCP adapter<br/>127.0.0.1:8768"]
+    A --> P["Policy gateway / grants<br/>(embedded in adapter)"]
+    P --> F["Files / Git / commands"]
+    P --> D["Windows desktop / tasks"]
+    P --> L[("Audit / revocation")]
+    O["Host owner"] --> C["Local owner console<br/>127.0.0.1:8767 (optional)"]
+```
 
-## Tests
+Other local gateway, bridge and backend services may be used by the full legacy stack. Their availability and ports depend on deployment; the standalone adapter does not automatically provision those services.
 
-Run tests in an isolated disposable checkout, not on a live installed agent:
+## Getting started on Windows 10/11
 
-    .\.venv\Scripts\python.exe -m pytest --collect-only -q
-    .\.venv\Scripts\python.exe -m pytest -q tests/test_red_team_security.py tests/test_mcp_gateway.py
+**Current published RC3:** Git and Python 3.12+ are required. Use a disposable Windows checkout:
 
-## Documents
+```powershell
+git clone https://github.com/phuonghuster7/winowner-mcp.git
+cd winowner-mcp
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Install-WindowsMcpAgent.ps1 -DryRun
+```
 
-- [Installation and owner setup](docs/INSTALLATION.md)
-- [Connect ChatGPT (authorized owner setup)](docs/CONNECT_CHATGPT.md)
-- [Troubleshooting](docs/TROUBLESHOOTING.md)
-- [Public publication checklist](docs/PUBLIC_RELEASE_CHECKLIST.md)
-- [Security](SECURITY.md)
-- [Contributing](CONTRIBUTING.md)
-- [Changelog](CHANGELOG.md)
-- [License](LICENSE) — MIT
+The dry-run checks prerequisites; it **does not** enable remote access or connect a ChatGPT account. See [installation](docs/INSTALLATION.md) and [owner pairing](docs/CONNECT_CHATGPT.md).
 
-**Tiếng Việt:** Đây là agent cục bộ để ChatGPT thao tác Windows khi được chủ máy xác thực. Không mở quyền toàn ổ đĩa mặc định, không đưa khóa/tunnel của máy thật vào GitHub và không chạy public endpoint thiếu OAuth.
+**One-line local read-only bootstrap is being validated in [PR #9](https://github.com/phuonghuster7/winowner-mcp/pull/9)**; it is not yet part of the published RC3 release. Remote OAuth/tunnel pairing remains a separate owner-authorized step.
+
+## Permission model
+
+| Tier | Purpose | Default |
+|---|---|---|
+| READ | Search, inspect and read | Enabled in `read_only` |
+| WRITE | Edit/create/delete files | Explicit authorization |
+| EXECUTE | Run shell commands and tests | Explicit authorization |
+| DESKTOP | Mouse, keyboard, windows | Explicit authorization |
+| SYSTEM_ADMIN | Higher-impact administration | Denied by default |
+
+`OWNER_GLOBAL_FILESYSTEM` is an **opt-in**, owner-only capability subject to the Windows service account's filesystem rights. It is not enabled in a standard installation. Text-pattern command blocking is an accident guard, **not a security boundary**.
+
+## Testing and known limitations
+
+- GitHub Actions covers source hygiene, history scanning, Ruff, selected security tests and installer dry-run.
+- Some live authorization, physical desktop and rollback tests require a separately controlled Windows environment and are not yet covered by headless CI.
+- A fresh Windows machine, end-to-end remote pairing and unattended restart need separate release acceptance. Do not present RC3 as production-ready.
+
+See [Troubleshooting](docs/TROUBLESHOOTING.md), [Contributing](CONTRIBUTING.md), [Changelog](CHANGELOG.md) and [Security](SECURITY.md).
+
+## License and trademarks
+
+MIT license — [LICENSE](LICENSE). WinOwner MCP is independent and is not affiliated with or endorsed by Microsoft or OpenAI. Windows and ChatGPT are trademarks of their respective owners.
