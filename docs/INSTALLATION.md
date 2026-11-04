@@ -1,4 +1,4 @@
-# Installation — Windows MCP Agent (v1.0.0-rc3 candidate)
+# Installation — WinOwner MCP (v1.0.0-rc3 candidate)
 
 ## Prerequisites
 
@@ -8,8 +8,8 @@ Use Windows 10/11 x64, PowerShell 5.1+ (or PowerShell 7), Python 3.12+, Git, and
 
 Run in a fresh directory or disposable VM:
 
-    git clone https://github.com/phuonghuster7/windows-mcp-agent-public windows-mcp-agent
-    cd windows-mcp-agent
+    git clone https://github.com/phuonghuster7/winowner-mcp.git winowner-mcp
+    cd winowner-mcp
     py -3.12 -m venv .venv
     .\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
 
@@ -18,10 +18,10 @@ Run in a fresh directory or disposable VM:
 Prerequisite: Git on Windows. Paste into PowerShell:
 
 ```powershell
-git clone https://github.com/phuonghuster7/windows-mcp-agent-public.git winowner-mcp; if ($LASTEXITCODE -eq 0) { powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\winowner-mcp\scripts\Bootstrap-WindowsMcp.ps1" }
+git clone https://github.com/phuonghuster7/winowner-mcp.git winowner-mcp; if ($LASTEXITCODE -eq 0) { powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\winowner-mcp\scripts\Bootstrap-WindowsMcp.ps1" }
 ```
 
-The bootstrap automatically creates the Python 3.12 virtual environment, installs dependencies, configures local read-only operation, creates a user-restricted local bearer credential, starts only the standalone 8768 adapter, then checks /health and unauthenticated denial. It fails if port 8768 is occupied; no existing process is killed. It may use winget to install Python 3.12 if missing. Git itself cannot install or OAuth-pair an agent.
+The bootstrap automatically creates the Python 3.12 virtual environment, installs dependencies, configures local read-only operation, creates a user-restricted local bearer [REDACTED], starts only the standalone 8768 adapter, then checks /health and unauthenticated denial. It fails if port 8768 is occupied; no existing process is killed. It may use winget to install Python 3.12 if missing. Git itself cannot install or OAuth-pair an agent.
 
 **LOCAL_INSTALL_PASS does NOT mean the ChatGPT connector is connected.** The operator must complete owner OAuth and private tunnel pairing using docs/CONNECT_CHATGPT.md. Owner full filesystem privileges are never provisioned automatically.
 

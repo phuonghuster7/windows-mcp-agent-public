@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Read-only, non-mutating end-to-end diagnostic verification for the Windows MCP Agent Stack.
+    Read-only, non-mutating end-to-end diagnostic verification for the WinOwner MCP Stack.
 
 .DESCRIPTION
     Verifies:
@@ -466,7 +466,7 @@ $allPassed = ($passedCount -eq $totalCount)
 
 Write-Host ""
 Write-Host "==========================================================================================" -ForegroundColor Cyan
-Write-Host " Windows MCP Agent Stack - Diagnostic Verification Report ($passedCount/$totalCount PASS)" -ForegroundColor Cyan
+Write-Host " WinOwner MCP Stack - Diagnostic Verification Report ($passedCount/$totalCount PASS)" -ForegroundColor Cyan
 Write-Host "==========================================================================================" -ForegroundColor Cyan
 $checks | Select-Object Status, Category, Check, Details | Format-Table -AutoSize -Wrap
 

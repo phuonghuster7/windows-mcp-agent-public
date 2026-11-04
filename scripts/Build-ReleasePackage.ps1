@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Builds a clean, secret-scanned GitHub release package for Windows MCP Agent (Stage S6 / P6).
+    Builds a clean, secret-scanned GitHub release package for WinOwner MCP (Stage S6 / P6).
 
 .DESCRIPTION
     1. Collects all tracked release files (excluding `.env`, `*.dpapi`, `*.key`, `*.pem`,
@@ -9,7 +9,7 @@
        patterns (`sk-`, `PRIVATE KEY`, unredacted `Bearer` tokens, raw `dpapi_blob`).
     3. Stages the clean release tree with `.gitkeep` placeholders for runtime directories.
     4. Builds:
-         - `D:\ExampleProjects\Windows-MCP-Agent\dist\windows-mcp-agent-v1.0.0-rc1.zip`
+         - `D:\ExampleProjects\Windows-MCP-Agent\dist\winowner-mcp-v1.0.0-rc1.zip`
          - `D:\ExampleProjects\Windows-MCP-Agent\dist\release-manifest.json`
          - `D:\ExampleProjects\Windows-MCP-Agent\dist\SHA256SUMS.txt`
 #>
@@ -31,7 +31,7 @@ Add-Type -AssemblyName System.IO.Compression.FileSystem
 
 $ProjectRoot = [System.IO.Path]::GetFullPath($ProjectRoot)
 $OutputDir = [System.IO.Path]::GetFullPath($OutputDir)
-$PackageName = "windows-mcp-agent-$Version"
+$PackageName = "winowner-mcp-$Version"
 $ZipPath = Join-Path $OutputDir "$PackageName.zip"
 $ManifestPath = Join-Path $OutputDir "release-manifest.json"
 $Sha256SumsPath = Join-Path $OutputDir "SHA256SUMS.txt"
@@ -412,7 +412,7 @@ if (-not $DryRun) {
 
 $modeText = $(if ($DryRun) { "DRY-RUN" } else { "RELEASE BUILD" })
 Write-Host "==========================================================================================" -ForegroundColor Cyan
-Write-Host " Windows MCP Agent Release Builder ($modeText) -> Version: $Version" -ForegroundColor Green
+Write-Host " WinOwner MCP Release Builder ($modeText) -> Version: $Version" -ForegroundColor Green
 Write-Host " Files: $($manifestEntries.Count) | SecretScan: PASS (0 violations) | ZipSHA256: $zipSha256" -ForegroundColor Cyan
 Write-Host "==========================================================================================" -ForegroundColor Cyan
 exit 0

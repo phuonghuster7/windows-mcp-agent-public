@@ -1045,7 +1045,7 @@ def cmd_cutover(args: argparse.Namespace) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Manage Windows MCP Agent Owner Delegation, Backup, Rollback & Cutover")
+    parser = argparse.ArgumentParser(description="Manage WinOwner MCP Owner Delegation, Backup, Rollback & Cutover")
     parser.add_argument(
         "--oauth-db",
         default=str(PROJECT_ROOT / "runtime" / "oauth_state.db"),

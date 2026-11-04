@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    DPAPI credential protection & rotation readiness helper (P0.5) for Windows MCP Agent.
+    DPAPI credential protection & rotation readiness helper (P0.5) for WinOwner MCP.
 
 .DESCRIPTION
     Uses Windows Data Protection API (DPAPI CurrentUser scope) to encrypt, verify,

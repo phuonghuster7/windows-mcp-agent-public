@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Portable, idempotent installer for the Windows MCP Agent Stack (Stage S6 / P6).
+    Portable, idempotent installer for the WinOwner MCP Stack (Stage S6 / P6).
 
 .DESCRIPTION
     1. Verifies Windows OS version, PowerShell version, Python 3.11+ availability,
@@ -424,7 +424,7 @@ if (Test-Path $reportDir) {
 
 $modeText = $(if ($DryRun) { "DRY-RUN" } else { "LIVE INSTALL" })
 Write-Host "==========================================================================================" -ForegroundColor Cyan
-Write-Host " Windows MCP Agent Installer ($modeText) -> Status: $($reportObj.overall_status)" -ForegroundColor $(if ($overallOk) { "Green" } else { "Red" })
+Write-Host " WinOwner MCP Installer ($modeText) -> Status: $($reportObj.overall_status)" -ForegroundColor $(if ($overallOk) { "Green" } else { "Red" })
 Write-Host " TargetRoot: $TargetRoot | IdempotentRerun: $wasExistingInstall | CredPreserved: $existingCredentialPreserved" -ForegroundColor Cyan
 Write-Host "==========================================================================================" -ForegroundColor Cyan
 

@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Self-healing repair script for the Windows MCP Agent Stack (Stage S6 / P6).
+    Self-healing repair script for the WinOwner MCP Stack (Stage S6 / P6).
 
 .DESCRIPTION
     1. Inspects `runtime\watchdog.lock` and clears stale lockfiles if the owning PID is dead.
@@ -226,7 +226,7 @@ if (Test-Path $reportDir) {
 
 $modeText = $(if ($DryRun) { "DRY-RUN" } else { "LIVE REPAIR" })
 Write-Host "==========================================================================================" -ForegroundColor Cyan
-Write-Host " Windows MCP Agent Repair ($modeText) -> Status: $($reportObj.overall_status)" -ForegroundColor $(if ($overallOk) { "Green" } else { "Red" })
+Write-Host " WinOwner MCP Repair ($modeText) -> Status: $($reportObj.overall_status)" -ForegroundColor $(if ($overallOk) { "Green" } else { "Red" })
 Write-Host " LockAction: $lockAction | EmergencyStop: $emergencyAction | PolicyValid: $policyValid" -ForegroundColor Cyan
 Write-Host "==========================================================================================" -ForegroundColor Cyan
 
