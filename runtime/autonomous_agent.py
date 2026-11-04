@@ -1385,7 +1385,7 @@ def ensure_independent_worker_running(
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description="Windows MCP Agent — Autonomous Worker Daemon")
+    parser = argparse.ArgumentParser(description="WinOwner MCP — Autonomous Worker Daemon")
     parser.add_argument("--db-path", type=str, default=None, help="Path to SQLite database")
     parser.add_argument("--key-path", type=str, default=None, help="Path to HMAC key file")
     parser.add_argument("--max-tasks", type=int, default=None, help="Max tasks to execute before exiting")

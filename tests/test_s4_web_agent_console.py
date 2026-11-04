@@ -144,7 +144,7 @@ def test_01_ui_shell_and_owner_authentication_and_rate_limit(console_env):
 
     ui = client.get("/")
     assert ui.status_code == 200
-    assert "Windows MCP Agent — Mode B Console" in ui.text
+    assert "WinOwner MCP — Mode B Console" in ui.text
     assert TEST_OWNER_SECRET not in ui.text
     assert "localStorage.setItem" not in ui.text
     assert ui.headers.get("x-frame-options") == "DENY"
