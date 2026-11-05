@@ -58,7 +58,7 @@ The bootstrap configures read-only access, installs isolated Python dependencies
 
 Use `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Bootstrap-WindowsMcp.ps1 -DryRun` to check prerequisites without changes; use `-Remove` to stop the owned service and unregister its logon task (credentials intentionally retained for manual removal). Bootstrap is idempotent and refuses to kill processes it cannot verify as its own.
 
-**LOCAL_INSTALL_PASS is not OAuth pairing.** The one-line bootstrap enters `main` when PR #9 merges; it is **not present in the historical RC3 release ZIP**.
+**LOCAL_INSTALL_PASS is not OAuth pairing.** The one-line bootstrap is now available on `main`; it is **not present in the historical RC3 release ZIP**.
 
 ## Getting started on Windows 10/11
 
@@ -74,7 +74,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Install-Window
 
 The dry-run checks prerequisites; it **does not** enable remote access or connect a ChatGPT account. See [installation](docs/INSTALLATION.md) and [owner pairing](docs/CONNECT_CHATGPT.md).
 
-**Bootstrap release track:** [PR #9](https://github.com/phuonghuster7/winowner-mcp/pull/9) adds the verified per-user installer to `main`. The existing RC3 tag/ZIP remains historical; remote OAuth/tunnel pairing requires a separate owner-authorized step.
+**Bootstrap release track:** [PR #9](https://github.com/phuonghuster7/winowner-mcp/pull/9) was merged into `main`. The existing RC3 tag/ZIP remains historical; remote OAuth/tunnel pairing requires a separate owner-authorized step.
 
 ## Permission model
 
