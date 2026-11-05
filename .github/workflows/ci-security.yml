@@ -72,9 +72,14 @@ jobs:
       - name: Isolated security and gateway baseline
         shell: pwsh
         run: |
-          Write-Host 'Headless CI cannot verify live backend (tests 17/18) or legacy Windows PowerShell rollback environment (test 20). These remain explicit manual release gates.'
+          Write-Host 'Tests 17/18 require separately launched local backend and read bridge; they remain explicit integration gates. Test 20 runs against a disposable rollback fixture in CI.'
           python -m pytest -q tests/test_red_team_security.py tests/test_mcp_gateway.py --deselect=tests/test_red_team_security.py::TestRedTeamSecurity::test_17_backend_direct_calls_without_credentials_are_denied --deselect=tests/test_red_team_security.py::TestRedTeamSecurity::test_18_unapproved_cloud_connector_cannot_access_advanced_capabilities --deselect=tests/test_red_team_security.py::TestRedTeamSecurity::test_20_rollback_restores_last_known_good_state
           python -m pytest -q tests/test_owner_full_control.py tests/test_oauth_dynamic_owner.py tests/test_direct_coding_security.py
+
+      - name: Isolated rollback recovery regression
+        shell: pwsh
+        run: |
+          python -m pytest -q tests/test_red_team_security.py::TestRedTeamSecurity::test_20_rollback_restores_last_known_good_state
 
       - name: P0 redirect, pass-the-hash and loopback regression tests
         shell: pwsh

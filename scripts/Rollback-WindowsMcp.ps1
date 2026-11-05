@@ -21,6 +21,20 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
+# Use .NET SHA-256 directly. Some clean Windows CI shells do not autoload Get-FileHash.
+# This helper streams the file and works on Windows PowerShell 5.1 without external modules.
+function Get-PortableFileSha256 {
+    param([Parameter(Mandatory = $true)][string]$Path)
+    $stream = [System.IO.File]::OpenRead([System.IO.Path]::GetFullPath($Path))
+    $sha = [System.Security.Cryptography.SHA256]::Create()
+    try {
+        return ([System.BitConverter]::ToString($sha.ComputeHash($stream))).Replace("-", "")
+    } finally {
+        $sha.Dispose()
+        $stream.Dispose()
+    }
+}
+
 $ManifestPath = Join-Path $BackupDir "baseline_hashes.json"
 if (-not (Test-Path $ManifestPath)) {
     throw "Baseline hash manifest not found at: $ManifestPath"
@@ -42,7 +56,7 @@ foreach ($entry in $manifest.files) {
         $redactedFile = Join-Path $BackupDir "windows-mcp-isolated.redacted.yaml"
         $redactedExists = Test-Path $redactedFile
         $liveExists = Test-Path $origPath
-        $liveHash = $(if ($liveExists) { (Get-FileHash -Path $origPath -Algorithm SHA256).Hash.ToUpperInvariant() } else { "MISSING" })
+        $liveHash = $(if ($liveExists) { (Get-PortableFileSha256 -Path $origPath) } else { "MISSING" })
         $hashMatch = ($liveHash -eq $expectedHash)
 
         if (-not $redactedExists -or -not $liveExists) {
@@ -72,7 +86,7 @@ foreach ($entry in $manifest.files) {
         continue
     }
 
-    $backupHash = (Get-FileHash -Path $backupFile -Algorithm SHA256).Hash.ToUpperInvariant()
+    $backupHash = (Get-PortableFileSha256 -Path $backupFile)
     $backupHashOk = ($backupHash -eq $expectedHash)
     if (-not $backupHashOk) {
         $failures++
@@ -87,7 +101,7 @@ foreach ($entry in $manifest.files) {
     }
 
     $liveExists = Test-Path $origPath
-    $liveHash = $(if ($liveExists) { (Get-FileHash -Path $origPath -Algorithm SHA256).Hash.ToUpperInvariant() } else { "MISSING" })
+    $liveHash = $(if ($liveExists) { (Get-PortableFileSha256 -Path $origPath) } else { "MISSING" })
     $liveMatches = ($liveHash -eq $expectedHash)
     if (-not $liveMatches) {
         $driftCount++
@@ -108,7 +122,7 @@ foreach ($entry in $manifest.files) {
             New-Item -ItemType Directory -Path $parentDir -Force | Out-Null
         }
         Copy-Item -Path $backupFile -Destination $origPath -Force
-        $postHash = (Get-FileHash -Path $origPath -Algorithm SHA256).Hash.ToUpperInvariant()
+        $postHash = (Get-PortableFileSha256 -Path $origPath)
         $verifyOk = ($postHash -eq $expectedHash)
         if ($verifyOk) {
             $restoredCount++
