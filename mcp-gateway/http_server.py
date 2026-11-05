@@ -1995,26 +1995,9 @@ def _authenticate_autonomous_caller(
             pass
         return True, sess.client_id, 200, ""
 
-    # 4. Optional loopback tunnel identity for local adapter
-    if getattr(app.state, "allow_loopback_tunnel_identity", False):
-        client_host = request.client.host if request.client else "127.0.0.1"
-        if client_host in ("127.0.0.1", "localhost", "::1", "testclient"):
-            try:
-                from runtime.contracts import AuthPrincipal
-                request.state.auth_principal = AuthPrincipal(
-                    client_id="tunnel_owner",
-                    owner_id=expected_owner_id,
-                    tier="READ",
-                    scopes=frozenset(["mcp:autonomous"]),
-                    is_owner=False,
-                    auth_method="loopback_tunnel",
-                    metadata={"is_authenticated": True},
-                )
-            except Exception:
-                pass
-            return True, "tunnel_owner", 200, ""
-
-    # 5. Missing credential
+    # 4. Missing credential. Loopback source address is never authentication.
+    # A local tunnel can forward remote callers as 127.0.0.1.
+    # This guard must remain independent of any network/trust profile.
     if require_auth:
         gw.policy.audit.log_event(
             tool_name="mcp_autonomous_auth",
@@ -2302,6 +2285,33 @@ def _is_valid_redirect_uri(redirect_uri: str, client_id: str, app: FastAPI) -> b
     return False
 
 
+def _is_valid_oauth_redirect_uri(uri: str) -> bool:
+    """Validate OAuth redirect URI components; never trust a textual host prefix."""
+    if not isinstance(uri, str) or not uri or uri != uri.strip():
+        return False
+    if any(ch.isspace() or ord(ch) < 0x20 for ch in uri):
+        return False
+    if "\\" in uri or "#" in uri:
+        return False
+    try:
+        parsed = urllib.parse.urlsplit(uri)
+        if parsed.scheme not in ("http", "https") or not parsed.netloc:
+            return False
+        host = parsed.hostname
+        if not host or parsed.username is not None or parsed.password is not None:
+            return False
+        if "%" in parsed.netloc:
+            return False
+        port = parsed.port
+        if port is not None and not 1 <= port <= 65535:
+            return False
+        if parsed.scheme == "http":
+            return host.lower() in ("127.0.0.1", "localhost", "::1")
+        return True
+    except (ValueError, TypeError):
+        return False
+
+
 def register_oauth_endpoints(
     app: FastAPI,
     *,
@@ -2415,11 +2425,7 @@ def register_oauth_endpoints(
             redirect_uris = []
 
         for uri in redirect_uris:
-            if not (
-                uri.startswith("https://")
-                or uri.startswith("http://127.0.0.1")
-                or uri.startswith("http://localhost")
-            ):
+            if not _is_valid_oauth_redirect_uri(uri):
                 return JSONResponse(
                     status_code=400,
                     content={

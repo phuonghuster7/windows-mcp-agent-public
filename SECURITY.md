@@ -16,6 +16,8 @@ Do not disclose attack details, credentials or identifiable logs in public GitHu
 - **OWNER_GLOBAL_FILESYSTEM** is highly privileged, opt-in, owner-only, logged and revocable; it does not grant administrator rights or bypass NTFS/UAC.
 - Keep source-control histories and release artifacts free of credentials, signed grants, machine-local tunnel config, personal paths and runtime state.
 - Treat tool execution and third-party code as workstation code execution, not isolated execution.
+- Regex-based SEC-04 command blocking is an accident guard only, not a security boundary. Privileged commands still require owner-scoped authorization, Windows ACLs and process isolation; risk remains for intentionally approved arbitrary execution.
+- Public-source CI runs a vulnerability audit of the pinned Python runtime dependencies; advisory status may change after a release and cannot certify the entire application as secure.
 - Use the existing emergency stop, immutable backups when appropriate, and durable audit records.
 
 ## Incident response

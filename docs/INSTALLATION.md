@@ -13,6 +13,20 @@ Run in a fresh directory or disposable VM:
     py -3.12 -m venv .venv
     .\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
 
+## One-line local setup
+
+Prerequisite: Git on Windows. Paste into PowerShell:
+
+```powershell
+git clone https://github.com/phuonghuster7/winowner-mcp.git winowner-mcp; if ($LASTEXITCODE -eq 0) { powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\winowner-mcp\scripts\Bootstrap-WindowsMcp.ps1" }
+```
+
+The bootstrap automatically creates the Python 3.12 virtual environment, installs dependencies, configures local read-only operation, creates a user-restricted local bearer [REDACTED], registers a least-privilege Task Scheduler job that runs the standalone adapter at owner logon, then tests /health and HTTP 401 without authentication. It fails closed when an unknown process uses the port or the task name is occupied; no firewall is opened. It can install Python 3.12 with winget where supported. Git itself cannot install or OAuth-pair an agent.
+
+Run `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Bootstrap-WindowsMcp.ps1 -DryRun` for a non-mutating check. Run with `-Remove` to stop the verified local adapter and unregister the auto-start task. Existing secrets and policies remain on disk for owner-controlled cleanup. Auto-start has been verified across separate command sessions, but a full Windows reboot remains a separate acceptance check.
+
+**LOCAL_INSTALL_PASS does NOT mean the ChatGPT connector is connected.** The operator must complete owner OAuth and private tunnel pairing using docs/CONNECT_CHATGPT.md. Owner full filesystem privileges are never provisioned automatically.
+
 ## Verify installer before modifying your workstation
 
     powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Install-WindowsMcpAgent.ps1 -DryRun
