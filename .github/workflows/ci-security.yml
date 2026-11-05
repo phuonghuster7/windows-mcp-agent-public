@@ -57,6 +57,12 @@ jobs:
           python -m pip install --disable-pip-version-check --quiet pip-audit==2.10.1
           python -m pip_audit -r requirements.txt --progress-spinner off
 
+      - name: Bandit high-severity/high-confidence security gate
+        shell: pwsh
+        run: |
+          python -m pip install --disable-pip-version-check --quiet bandit==1.9.4
+          python -m bandit -r backend mcp-gateway runtime -lll -iii --quiet
+
       - name: Syntax and essential Ruff checks
         shell: pwsh
         run: |
