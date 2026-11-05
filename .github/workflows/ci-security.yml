@@ -49,6 +49,14 @@ jobs:
           & (Join-Path $dir 'gitleaks.exe') git . --redact --no-banner
           if ($LASTEXITCODE -ne 0) { throw 'Gitleaks found unexpected secrets in Git history' }
 
+      - name: P0 dependency vulnerability gate
+        shell: pwsh
+        env:
+          PYTHONUTF8: '1'
+        run: |
+          python -m pip install --disable-pip-version-check --quiet pip-audit==2.10.1
+          python -m pip_audit -r requirements.txt --progress-spinner off
+
       - name: Syntax and essential Ruff checks
         shell: pwsh
         run: |

@@ -2,6 +2,7 @@
 
 ## Unreleased — P0 Windows bootstrap and OAuth hardening
 
+- Upgraded vulnerable runtime dependencies (MCP SDK 2.3.0, Pillow 13.0.0, cryptography 50.0.2, AnyIO 4.16.0, pydantic-settings 2.14.2), with pip-audit reporting 0 known advisories on the locked top-level requirements as tested; the audit now fails CI on new findings.
 - One-line local read-only bootstrap using only pinned runtime dependencies, with a least-privileged per-user Task Scheduler action that survives the installer process and automatically starts at interactive owner logon.
 - Verifies local health, HTTP 401 for anonymous MCP calls, idempotent installation and controlled removal; remote owner pairing remains a separate explicit step.
 - OAuth redirect URI strict host validation, legacy pass-the-hash rejection and removal of loopback-only authentication fallback.
