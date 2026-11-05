@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased — P0 Windows bootstrap and OAuth hardening
+
+- One-line local read-only bootstrap using only pinned runtime dependencies, with a least-privileged per-user Task Scheduler action that survives the installer process and automatically starts at interactive owner logon.
+- Verifies local health, HTTP 401 for anonymous MCP calls, idempotent installation and controlled removal; remote owner pairing remains a separate explicit step.
+- OAuth redirect URI strict host validation, legacy pass-the-hash rejection and removal of loopback-only authentication fallback.
+- Adds Windows CI integration for install/start/idempotency/removal and dedicated OAuth regression tests.
+- Production RC3 remains unchanged; this unreleased source is not a stable public deployment certification.
+
 ## Unreleased — WinOwner MCP branding
 
 - Renamed the public repository to `phuonghuster7/winowner-mcp` and adopted **WinOwner MCP** as the public product name.

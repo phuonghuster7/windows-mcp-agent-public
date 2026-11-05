@@ -58,7 +58,7 @@ The bootstrap configures read-only access, installs isolated Python dependencies
 
 Use `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Bootstrap-WindowsMcp.ps1 -DryRun` to check prerequisites without changes; use `-Remove` to stop the owned service and unregister its logon task (credentials intentionally retained for manual removal). Bootstrap is idempotent and refuses to kill processes it cannot verify as its own.
 
-**LOCAL_INSTALL_PASS is not OAuth pairing.** The one-line bootstrap is part of the P0 changes in PR #9 and is **not included in the historic RC3 release ZIP**.
+**LOCAL_INSTALL_PASS is not OAuth pairing.** The one-line bootstrap enters `main` when PR #9 merges; it is **not present in the historical RC3 release ZIP**.
 
 ## Getting started on Windows 10/11
 
@@ -74,7 +74,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Install-Window
 
 The dry-run checks prerequisites; it **does not** enable remote access or connect a ChatGPT account. See [installation](docs/INSTALLATION.md) and [owner pairing](docs/CONNECT_CHATGPT.md).
 
-**One-line local read-only bootstrap is being validated in [PR #9](https://github.com/phuonghuster7/winowner-mcp/pull/9)**; it is not yet part of the published RC3 release. Remote OAuth/tunnel pairing remains a separate owner-authorized step.
+**Bootstrap release track:** [PR #9](https://github.com/phuonghuster7/winowner-mcp/pull/9) adds the verified per-user installer to `main`. The existing RC3 tag/ZIP remains historical; remote OAuth/tunnel pairing requires a separate owner-authorized step.
 
 ## Permission model
 
@@ -92,7 +92,7 @@ The dry-run checks prerequisites; it **does not** enable remote access or connec
 
 - GitHub Actions covers source hygiene, history scanning, Ruff, selected security tests and installer dry-run.
 - Some live authorization, physical desktop and rollback tests require a separately controlled Windows environment and are not yet covered by headless CI.
-- A fresh Windows machine, end-to-end remote pairing and unattended restart need separate release acceptance. Do not present RC3 as production-ready.
+- A fresh external Windows machine, end-to-end remote pairing and an actual reboot/logon recovery test need separate release acceptance. Do not present RC3 as production-ready.
 
 See [Troubleshooting](docs/TROUBLESHOOTING.md), [Contributing](CONTRIBUTING.md), [Changelog](CHANGELOG.md) and [Security](SECURITY.md).
 

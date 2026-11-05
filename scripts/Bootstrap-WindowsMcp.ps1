@@ -102,7 +102,7 @@ if ($Remove) {
     Step "TASK_REMOVED: $taskName, verified local listener stopped. Credentials/config kept for owner review."
     exit 0
 }
-foreach ($p in @($runner, $adapter, $policyExample, (Join-Path $root "requirements-dev.txt"))) {
+foreach ($p in @($runner, $adapter, $policyExample, (Join-Path $root "requirements.txt"))) {
     if (-not (Test-Path -LiteralPath $p -PathType Leaf)) { throw "Missing release file: $p" }
 }
 $task = Managed-Task
@@ -133,7 +133,7 @@ if (-not (Test-Path -LiteralPath $venv)) {
     Check-Exit "venv"
 }
 Step "Installing/verifying pinned dependencies."
-& $venv -m pip install --disable-pip-version-check --quiet -r (Join-Path $root "requirements-dev.txt")
+& $venv -m pip install --disable-pip-version-check --quiet -r (Join-Path $root "requirements.txt")
 Check-Exit "Python dependencies"
 New-Item -ItemType Directory -Path $secretDir, $logDir -Force | Out-Null
 if (-not (Test-Path -LiteralPath $policyPath)) {
