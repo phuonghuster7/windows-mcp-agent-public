@@ -54,7 +54,9 @@ Paste this **single line into PowerShell** (Git required; Python 3.12 can be ins
 git clone https://github.com/phuonghuster7/winowner-mcp.git winowner-mcp; if ($LASTEXITCODE -eq 0) { powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\winowner-mcp\scripts\Bootstrap-WindowsMcp.ps1" }
 ```
 
-The bootstrap configures local read-only access, installs Python dependencies, starts a loopback-only adapter, and verifies health and denial of unauthenticated MCP requests. It does **not** enable OWNER_GLOBAL_FILESYSTEM, configure a private tunnel, or pair ChatGPT.
+The bootstrap configures read-only access, installs isolated Python dependencies and registers a **least-privilege Windows Task Scheduler job** that starts the local adapter automatically when the installing user logs in. It verifies health and rejects unauthenticated MCP calls. It does **not** enable OWNER_GLOBAL_FILESYSTEM, open firewall ports, configure a private tunnel or pair ChatGPT.
+
+Use `powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Bootstrap-WindowsMcp.ps1 -DryRun` to check prerequisites without changes; use `-Remove` to stop the owned service and unregister its logon task (credentials intentionally retained for manual removal). Bootstrap is idempotent and refuses to kill processes it cannot verify as its own.
 
 **LOCAL_INSTALL_PASS is not OAuth pairing.** The one-line bootstrap is part of the P0 changes in PR #9 and is **not included in the historic RC3 release ZIP**.
 

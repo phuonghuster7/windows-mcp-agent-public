@@ -72,6 +72,11 @@ jobs:
         run: |
           powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Bootstrap-WindowsMcp.ps1 -DryRun -Port 18769
 
+      - name: P0 isolated local service install, restart and cleanup
+        shell: pwsh
+        run: |
+          powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\Test-WinOwnerBootstrap.ps1 -Port 18769
+
       - name: Installer dry-run, no services started
         shell: pwsh
         run: |

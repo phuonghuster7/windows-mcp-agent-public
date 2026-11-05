@@ -31,7 +31,7 @@ Chạy trong PowerShell trên Windows (cần Git):
 git clone https://github.com/phuonghuster7/winowner-mcp.git winowner-mcp; if ($LASTEXITCODE -eq 0) { powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\winowner-mcp\scripts\Bootstrap-WindowsMcp.ps1" }
 ```
 
-Lệnh kiểm tra môi trường, cài dependency và khởi động MCP cục bộ chế độ read-only. **Không** tự ghép nối OAuth/ChatGPT và **không** cấp quyền Owner toàn ổ. Phần này thuộc PR #9; ZIP RC3 trước đây không chứa bootstrap.
+Lệnh kiểm tra môi trường, cài dependency, đăng ký tác vụ Windows Task Scheduler có quyền hạn chế để tự chạy MCP cục bộ ở chế độ read-only khi chủ máy đăng nhập. Dùng `-DryRun` để kiểm tra không sửa hệ thống, hoặc `-Remove` để gỡ tác vụ và dừng tiến trình đã xác minh; không xóa credential nếu chưa được yêu cầu. **Không** tự ghép nối OAuth/ChatGPT và **không** cấp quyền Owner toàn ổ. Phần này thuộc PR #9; ZIP RC3 trước đây không chứa bootstrap.
 
 ## Cài đặt hiện tại
 
